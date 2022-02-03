@@ -16,7 +16,7 @@ public class BombScript : MonoBehaviour
      IEnumerator BadaBum()
      {
          yield return new WaitForSeconds(3);
-         var colliders = Physics2D.OverlapCircleAll(transform.position, 1f, destroyableObjects);
+         var colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f, destroyableObjects);
          
          foreach (var cldr in colliders) 
          {
