@@ -1,18 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BombScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private LayerMask destroyableObjects;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+     void Start()
+     {
+         StartCoroutine(nameof(BadaBum));
+     }
+
+     IEnumerator BadaBum()
+     {
+         yield return new WaitForSeconds(3);
+         var colliders = Physics2D.OverlapCircleAll(transform.position, 1f, destroyableObjects);
+         
+         foreach (var cldr in colliders) 
+         {
+             Destroy(cldr.gameObject);
+         }
+         Destroy(this.gameObject);
+         
+         
+     }
 }
+

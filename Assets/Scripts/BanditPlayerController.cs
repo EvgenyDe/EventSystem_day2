@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 
 public class BanditPlayerController : MonoBehaviour
 {
@@ -39,20 +43,26 @@ public class BanditPlayerController : MonoBehaviour
             MovePlayerTo(Vector2.down);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     var obj = RaycastFromCamera();
+        //     if (obj != null && obj.CompareTag("Explosive"))
+        //     {
+        //         Destroy(obj);
+        //
+        //         var colliders = Physics2D.OverlapCircleAll(obj.transform.position, 1f, explosionMask);
+        //
+        //         foreach (var cldr in colliders)
+        //         {
+        //             Destroy(cldr.gameObject);
+        //         }
+        //     }
+        // }
+        
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            var obj = RaycastFromCamera();
-            if (obj != null && obj.CompareTag("Explosive"))
-            {
-                Destroy(obj);
-
-                var colliders = Physics2D.OverlapCircleAll(obj.transform.position, 1f, explosionMask);
-
-                foreach (var cldr in colliders)
-                {
-                    Destroy(cldr.gameObject);
-                }
-            }
+            Instantiate(bomb, transform.position, Quaternion.identity);
+            
         }
     }
 
@@ -82,5 +92,10 @@ public class BanditPlayerController : MonoBehaviour
     {
         var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         return hit.collider != null ? hit.collider.gameObject : null;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.LoadScene(0);
     }
 }
